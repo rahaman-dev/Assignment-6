@@ -62,15 +62,55 @@ let loadAPIid = () => {
 };
 
 let getProductWithId = (id) => {
+  let getModalContainer = document.getElementById("modalBody");
   id.forEach((element) => {
     let allIdUrl = `https://openapi.programming-hero.com/api/ai/tool/${element.id}`;
     console.log(allIdUrl);
-    // let crtDivForModal = document.createElement("div");
-    // crtDivForModal.innerHTML = `
-    // <h1>Rs Rahaman</h1>
-    // `;
-    // getModalContainer.appendChild(crtDivForModal);
   });
+  let crtDivForModal = document.createElement("div");
+  crtDivForModal.innerHTML = `
+  <div class="card" style="width: 30rem">
+  <div class="card-body">
+    <h5 class="card-title">${element.name}</h5>
+  </div>
+  <div class="d-flex">
+    <div class="card m-5 bg-danger text-primary">
+      <div class="card-body">
+        <h5>$10/month Basic</h5>
+      </div>
+    </div>
+    <div class="card m-5 bg-danger-subtle text-success">
+      <div class="card-body">
+        <h5>$10/month Basic</h5>
+      </div>
+    </div>
+    <div class="card m-5 bg-warning-subtle text-danger">
+      <div class="card-body">
+        <h5>$10/month Basic</h5>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="ul ms-3">
+      <h5>Integrations</h5>
+      <ul>
+        <li>Customizable responses</li>
+        <li>Customizable responses</li>
+        <li>Customizable responses</li>
+      </ul>
+    </div>
+    <div class="ul ms-3">
+      <h5>Features</h5>
+      <ul>
+        <li>Customizable responses</li>
+        <li>Customizable responses</li>
+        <li>Customizable responses</li>
+      </ul>
+    </div>
+  </div>
+</div>
+    `;
+  getModalContainer.appendChild(crtDivForModal);
 };
 
 loadAPIid();
