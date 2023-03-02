@@ -1,5 +1,5 @@
-let allDataUrl = `https://openapi.programming-hero.com/api/ai/tools`;
 let loadAPI = () => {
+  let allDataUrl = `https://openapi.programming-hero.com/api/ai/tools`;
   fetch(allDataUrl)
     .then((res) => res.json())
     .then((data) => getProduct(data.data));
@@ -62,16 +62,15 @@ let loadAPIid = () => {
 };
 
 let getProductWithId = (id) => {
-  let getModalContainer = document.getElementById("modalBody");
+//   console.log(id);
   id.forEach((element) => {
     let allIdUrl = `https://openapi.programming-hero.com/api/ai/tool/${element.id}`;
-    console.log(allIdUrl);
   });
-  let crtDivForModal = document.createElement("div");
-  crtDivForModal.innerHTML = `
+  const [{ name, description, image, features }] = id;
+  let getModalContainer = (document.getElementById("modalBody").innerHTML = `
   <div class="card" style="width: 30rem">
   <div class="card-body">
-    <h5 class="card-title">${element.name}</h5>
+    <h5 class="card-title">${name} </h5>
   </div>
   <div class="d-flex">
     <div class="card m-5 bg-danger text-primary">
@@ -92,7 +91,7 @@ let getProductWithId = (id) => {
   </div>
   <div class="d-flex">
     <div class="ul ms-3">
-      <h5>Integrations</h5>
+      <h5>Features</h5>
       <ul>
         <li>Customizable responses</li>
         <li>Customizable responses</li>
@@ -100,7 +99,7 @@ let getProductWithId = (id) => {
       </ul>
     </div>
     <div class="ul ms-3">
-      <h5>Features</h5>
+      <h5>Integrations</h5>
       <ul>
         <li>Customizable responses</li>
         <li>Customizable responses</li>
@@ -109,13 +108,21 @@ let getProductWithId = (id) => {
     </div>
   </div>
 </div>
-    `;
-  getModalContainer.appendChild(crtDivForModal);
+ <div class="card" style="width: 30rem">
+      <img
+        src="${image}"
+        class="card-img-top"
+        alt="..."
+      />
+      <div class="card-body">
+        <h2>Hi, how are you doing today?</h2>
+        <p class="card-text text-center">
+         ${description}
+        </p>
+      </div>
+    </div>
+    `);
+  //   getModalContainer.appendChild(crtDivForModal);
 };
 
 loadAPIid();
-//   console.log(data.data.tools[0].image);
-//   console.log(data.data.tools[0].name);
-//   console.log(data.data.tools[0].features[0]);
-//   console.log(data.data.tools[0].features[1]);
-//   console.log(data.data.tools[0].published_in);
