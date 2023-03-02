@@ -62,65 +62,76 @@ let loadAPIid = () => {
 };
 
 let getProductWithId = (id) => {
-//   console.log(id);
+  //   console.log(id);
   id.forEach((element) => {
+    console.log(element);
     let allIdUrl = `https://openapi.programming-hero.com/api/ai/tool/${element.id}`;
   });
-  const [{ name, description, image, features }] = id;
+  //   const {
+  //     status,
+  //     data: {
+  //       id,
+  //       tool_name,
+  //       description,
+  //       website,
+  //       logo,
+  //       image_link,
+  //       input_output_examples,
+  //       features,
+  //       integrations,
+  //       use_cases,
+  //       pricing,
+  //       accuracy: { score, description: accuracyDescription },
+  //     },
+  //   } = id;
   let getModalContainer = (document.getElementById("modalBody").innerHTML = `
-  <div class="card" style="width: 30rem">
-  <div class="card-body">
-    <h5 class="card-title">${name} </h5>
+  <div class="card ms-5" style="width: 30rem">
+    <div class="card-body">
+      <h5 class="card-title">ChatGPT is an AI-powered chatbot platform that uses OpenAI's GPT technology to simulate human conversation.</h5>
+    </div>
+    <div class="d-flex">
+      <div class="card m-2 bg-danger text-primary">
+        <div class="card-body">
+          <h5>$10/month Basic</h5>
+        </div>
+      </div>
+      <div class="card m-2 bg-danger-subtle text-success">
+        <div class="card-body">
+          <h5>$10/month Basic</h5>
+        </div>
+      </div>
+      <div class="card m-2 bg-warning-subtle text-danger">
+        <div class="card-body">
+          <h5>$10/month Basic</h5>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="ul ms-3">
+        <h5>Features</h5>
+        <ul>
+          <li>Customizable responses</li>
+          <li>Customizable responses</li>
+          <li>Customizable responses</li>
+        </ul>
+      </div>
+      <div class="ul ms-3">
+        <h5>Integrations</h5>
+        <ul>
+          <li>Customizable responses</li>
+          <li>Customizable responses</li>
+          <li>Customizable responses</li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="d-flex">
-    <div class="card m-5 bg-danger text-primary">
-      <div class="card-body">
-        <h5>$10/month Basic</h5>
-      </div>
-    </div>
-    <div class="card m-5 bg-danger-subtle text-success">
-      <div class="card-body">
-        <h5>$10/month Basic</h5>
-      </div>
-    </div>
-    <div class="card m-5 bg-warning-subtle text-danger">
-      <div class="card-body">
-        <h5>$10/month Basic</h5>
-      </div>
+  <div class="card ms-5" style="width: 30rem">
+    <img src="./img/chatgpt_assistente 1-2.png" class="card-img-top" alt="..." />
+    <div class="card-body">
+      <h2>Hi, how are you doing today?</h2>
+      <p class="card-text text-center">hatGPT is an AI-powered chatbot platform that uses OpenAI's GPT technology to simulate human conversation.hatGPT is an AI-powered chatbot platform that uses OpenAI's GPT technology to simulate human conversation.hatGPT is an AI-powered chatbot platform that uses OpenAI's GPT technology to simulate human conversation.</p>
     </div>
   </div>
-  <div class="d-flex">
-    <div class="ul ms-3">
-      <h5>Features</h5>
-      <ul>
-        <li>Customizable responses</li>
-        <li>Customizable responses</li>
-        <li>Customizable responses</li>
-      </ul>
-    </div>
-    <div class="ul ms-3">
-      <h5>Integrations</h5>
-      <ul>
-        <li>Customizable responses</li>
-        <li>Customizable responses</li>
-        <li>Customizable responses</li>
-      </ul>
-    </div>
-  </div>
-</div>
- <div class="card" style="width: 30rem">
-      <img
-        src="${image}"
-        class="card-img-top"
-        alt="..."
-      />
-      <div class="card-body">
-        <h2>Hi, how are you doing today?</h2>
-        <p class="card-text text-center">
-         ${description}
-        </p>
-      </div>
-    </div>
     `);
   //   getModalContainer.appendChild(crtDivForModal);
 };
