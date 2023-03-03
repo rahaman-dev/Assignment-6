@@ -3,8 +3,8 @@ let loadAPI = () => {
   fetch(allDataUrl)
     .then((res) => res.json())
     .then((data) => displayProduct(data.data.tools));
+  toggleSpinier(false);
 };
-
 let displayProduct = (data) => {
   // let arr = [data];
   data = data.slice(0, 6);
@@ -59,6 +59,7 @@ let displayProduct = (data) => {
 };
 
 let displayAllData = (data) => {
+  data = data.slice(6, 12);
   data.forEach((element) => {
     console.log(element.id);
     let getProductContainer = document.getElementById("productContainer");
@@ -182,23 +183,31 @@ let displayWithId = (data) => {
             `;
 };
 
-loadAPI();
-
 // show all data
 let loadAllData = () => {
   let allDataUrl = `https://openapi.programming-hero.com/api/ai/tools`;
   fetch(allDataUrl)
     .then((res) => res.json())
     .then((data) => displayAllData(data.data.tools));
+  toggleSpinier(false);
 };
-
 // show more button
 document.getElementById("seeMoreBtn").addEventListener("click", function () {
   loadAllData();
-  let showMoreButton = document.getElementById("showMoreButton");
-  showMoreButton.addClassLIst("d-none");
+  let seeMoreBtn = document.getElementById("seeMoreBtn");
+  seeMoreBtn.classList.add("d-none");
 });
 
+// spiner
+let toggleSpinier = (isLodging) => {
+  let getLoader = document.getElementById("loader");
+  if (isLodging) {
+    getLoader.classList.remove("d-none");
+  } else {
+    getLoader.classList.add("d-none");
+  }
+};
+loadAPI();
 // let loadAPIid = () => {
 //   let allIdUrl = `https://openapi.programming-hero.com/api/ai/tools`;
 //   fetch(allIdUrl)
