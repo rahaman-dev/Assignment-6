@@ -1,4 +1,4 @@
-getModalContainer.innerHTML = `
+<!-- getModalContainer.innerHTML = `
 <div class="card ms-5" style="width: 35rem">
   <div class="card-body">
     <h5 class="card-title">data.data.tool_name</h5>
@@ -67,4 +67,36 @@ getModalContainer.innerHTML = `
     </p>
   </div>
 </div>
-`; getModalContainer.appendChild(crtDiv2);
+`; getModalContainer.appendChild(crtDiv2); -->
+
+<div class="card col-sm-6 col-md-4">
+  <img src="${element.image}" class="card-img-top" alt="..." />
+  <div class="card-body">
+    <h4 class="card-title">Features</h4>
+    <ol class="">
+      <li class=" ">${element.features[0]}</li>
+      <li class="">${element.features[2]}</li>
+      <li class="">${element.features[3]}</li>
+    </ol>
+    <div class="cardFooter">
+      <h4 class="card-title">${element.name}</h4>
+      <div class="date d-flex align-items-center justify-content-between">
+        <div class="img d-flex">
+          <img
+            src="./img/dateIMg.png"
+            class="me-2"
+            alt=""
+            width="25px"
+            height="25px"
+          />
+          <p>${element.published_in}</p>
+        </div>
+        <i
+          class="fa-solid fa-arrow-right"
+          data-bs-target="#exampleModalToggle"
+          data-bs-toggle="modal"
+        ></i>
+      </div>
+    </div>
+  </div>
+</div>
