@@ -11,7 +11,7 @@ let displayProduct = (data) => {
   let showMoreButton = document.getElementById("showMoreButton");
   // showMoreButton.removeClassList("d-none");
   data.forEach((element) => {
-    console.log(element.id);
+    // console.log(element.id);
     let getProductContainer = document.getElementById("productContainer");
     // data = arr.slice(0, 5);
     let crtDiv = document.createElement("div");
@@ -62,7 +62,7 @@ let displayProduct = (data) => {
 let displayAllData = (data) => {
   data = data.slice(6, 12);
   data.forEach((element) => {
-    console.log(element.id);
+    // console.log(element.id);
     let getProductContainer = document.getElementById("productContainer");
     // data = arr.slice(0, 5);
     let crtDiv = document.createElement("div");
@@ -115,9 +115,11 @@ let loadWithId = (id) => {
     .then((data) => displayWithId(data));
 };
 
+// modal
 let displayWithId = (data) => {
   console.log(data);
   let getModalContainer = document.getElementById("modalBody");
+  // getModalContainer.innerHTML = "";
   getModalContainer.innerHTML = `
           <div class="card ms-5" style="width: 35rem">
             <div class="card-body">
@@ -208,81 +210,80 @@ let toggleSpinier = (isLodging) => {
   }
 };
 loadAPI();
+
+// filter by date
+document.getElementById("filterBtn").addEventListener("click", function () {});
+
 // let loadAPIid = () => {
-//   let allIdUrl = `https://openapi.programming-hero.com/api/ai/tools`;
-//   fetch(allIdUrl)
+//   fetch(`https://openapi.programming-hero.com/api/ai/tools`)
 //     .then((res) => res.json())
 //     .then((id) => getProductWithId(id.data.tools));
 // };
 
 // let getProductWithId = (id) => {
 //   id.forEach((element) => {
-//     // let getAllIdUrl = ;
 //     fetch(`https://openapi.programming-hero.com/api/ai/tool/${element.id}`)
 //       .then((res) => res.json())
-//       .then((data) => getInformationOnModal(data));
+//       .then((data) => getInformationOnModal(data.data));
 //   });
 
 //   let getInformationOnModal = (data) => {
-//     // console.log(data);
-//     // console.log(data.data.tool_name);
-//     // console.log(data.data.accuracy.description);
+//     // console.log(data.tools);
+//     // let convert = Object.values(data);
+//     // console.log(convert["1"]);
 //     let getModalContainer = document.getElementById("modalBody");
-//     // let convertOjbInToArray = Object.entries(data);
-//     // console.log(convertOjbInToArray);
-//     // convertOjbInToArray.forEach((data) => {
-//     // console.log(elm);
-//     getModalContainer.innerHTML = `
-//         <div class="card ms-5" style="width: 35rem">
-//           <div class="card-body">
-//             <h5 class="card-title">{elm.tool_name}</h5>
-//           </div>
-//           <div class="d-flex">
-//             <div class="card m-2 bg-danger text-primary">
-//               <div class="card-body">
-//                 <h5>$10/month Basic</h5>
+//     data.data.forEach((data) => {
+//       // console.log(element);
+//       getModalContainer.innerHTML = `
+//           <div class="card ms-5" style="width: 35rem">
+//             <div class="card-body">
+//               <h5 class="card-title">${data[1]}</h5>
+//             </div>
+//             <div class="d-flex">
+//               <div class="card m-2 bg-danger text-primary">
+//                 <div class="card-body">
+//                   <h5>$10/month Basic</h5>
+//                 </div>
+//               </div>
+//               <div class="card m-2 bg-danger-subtle text-success">
+//                 <div class="card-body">
+//                   <h5>$10/month Basic</h5>
+//                 </div>
+//               </div>
+//               <div class="card m-2 bg-warning-subtle text-danger">
+//                 <div class="card-body">
+//                   <h5>$10/month Basic</h5>
+//                 </div>
 //               </div>
 //             </div>
-//             <div class="card m-2 bg-danger-subtle text-success">
-//               <div class="card-body">
-//                 <h5>$10/month Basic</h5>
+//             <div class="d-flex">
+//               <div class="ul ms-3">
+//                 <h5>Features</h5>
+//                 <ul>
+//                   <li> </li>
+//                   <li> </li>
+//                   <li> }</li>
+//                 </ul>
+//               </div>
+//               <div class="ul ms-3">
+//                 <h5>Integrations</h5>
+//                 <ul>
+//                   <li></li>
+//                   <li></li>
+//                   <li></li>
+//                 </ul>
 //               </div>
 //             </div>
-//             <div class="card m-2 bg-warning-subtle text-danger">
-//               <div class="card-body">
-//                 <h5>$10/month Basic</h5>
-//               </div>
+//           </div>
+//           <div class="card ms-5" style="width: 30rem">
+//             <img src=" " class="card-img-top" alt="..." />
+//             <div class="card-body">
+//               <h2> </h2>
+//               <p class="card-text text-center">$ </p>
 //             </div>
 //           </div>
-//           <div class="d-flex">
-//             <div class="ul ms-3">
-//               <h5>Features</h5>
-//               <ul>
-//                 <li> </li>
-//                 <li> </li>
-//                 <li> }</li>
-//               </ul>
-//             </div>
-//             <div class="ul ms-3">
-//               <h5>Integrations</h5>
-//               <ul>
-//                 <li></li>
-//                 <li></li>
-//                 <li></li>
-//               </ul>
-//             </div>
-//           </div>
-//         </div>
-//         <div class="card ms-5" style="width: 30rem">
-//           <img src=" " class="card-img-top" alt="..." />
-//           <div class="card-body">
-//             <h2> </h2>
-//             <p class="card-text text-center">$ </p>
-//           </div>
-//         </div>
-//           `;
-//     //   getModalContainer.appendChild(crtDivForModal);
-//     // });
+//             `;
+//     });
 //   };
 // };
 // loadAPIid();
