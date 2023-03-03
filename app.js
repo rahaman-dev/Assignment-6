@@ -56,6 +56,7 @@ let displayProduct = (data) => {
     getProductContainer.appendChild(crtDiv);
     loadWithId(element.id);
   });
+  toggleSpinier(false);
 };
 
 let displayAllData = (data) => {
@@ -193,10 +194,8 @@ let loadAllData = () => {
 // show more button
 document.getElementById("seeMoreBtn").addEventListener("click", function () {
   loadAllData();
-
   let seeMoreBtn = document.getElementById("seeMoreBtn");
   seeMoreBtn.classList.add("d-none");
-  // start loader
 });
 
 // spinier
