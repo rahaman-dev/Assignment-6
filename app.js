@@ -3,7 +3,7 @@ let loadAPI = () => {
   fetch(allDataUrl)
     .then((res) => res.json())
     .then((data) => displayProduct(data.data.tools));
-  toggleSpinier(false);
+  toggleSpinier(true);
 };
 let displayProduct = (data) => {
   // let arr = [data];
@@ -189,16 +189,17 @@ let loadAllData = () => {
   fetch(allDataUrl)
     .then((res) => res.json())
     .then((data) => displayAllData(data.data.tools));
-  toggleSpinier(false);
 };
 // show more button
 document.getElementById("seeMoreBtn").addEventListener("click", function () {
   loadAllData();
+
   let seeMoreBtn = document.getElementById("seeMoreBtn");
   seeMoreBtn.classList.add("d-none");
+  // start loader
 });
 
-// spiner
+// spinier
 let toggleSpinier = (isLodging) => {
   let getLoader = document.getElementById("loader");
   if (isLodging) {
