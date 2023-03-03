@@ -2,13 +2,15 @@ let loadAPI = () => {
   let allDataUrl = `https://openapi.programming-hero.com/api/ai/tools`;
   fetch(allDataUrl)
     .then((res) => res.json())
-    .then((data) => getProduct(data.data));
+    .then((data) => displayProduct(data.data));
 };
 
-let getProduct = (data) => {
+let displayProduct = (data) => {
+  // let arr = [data];
   data.tools.forEach((element) => {
-    // console.log(element.id);
+    console.log(element.id);
     let getProductContainer = document.getElementById("productContainer");
+    // data = arr.slice(0, 5);
     let crtDiv = document.createElement("div");
     crtDiv.innerHTML = `
     <div class="card m-5">
@@ -49,91 +51,161 @@ let getProduct = (data) => {
 </div>
 `;
     getProductContainer.appendChild(crtDiv);
-    // let allIdUrl = `https://openapi.programming-hero.com/api/ai/tool/${element.id}`;
+    loadWithId(element.id);
   });
 };
 loadAPI();
 
-let loadAPIid = () => {
-  let allIdUrl = `https://openapi.programming-hero.com/api/ai/tools`;
-  fetch(allIdUrl)
+let loadWithId = (id) => {
+  fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
     .then((res) => res.json())
-    .then((id) => getProductWithId(id.data.tools));
+    .then((data) => displayWithId(data));
 };
 
-let getProductWithId = (id) => {
-  //   console.log(id);
-  id.forEach((element) => {
-    console.log(element);
-    let allIdUrl = `https://openapi.programming-hero.com/api/ai/tool/${element.id}`;
-  });
-  //   const {
-  //     status,
-  //     data: {
-  //       id,
-  //       tool_name,
-  //       description,
-  //       website,
-  //       logo,
-  //       image_link,
-  //       input_output_examples,
-  //       features,
-  //       integrations,
-  //       use_cases,
-  //       pricing,
-  //       accuracy: { score, description: accuracyDescription },
-  //     },
-  //   } = id;
-  let getModalContainer = (document.getElementById("modalBody").innerHTML = `
-  <div class="card ms-5" style="width: 30rem">
-    <div class="card-body">
-      <h5 class="card-title">ChatGPT is an AI-powered chatbot platform that uses OpenAI's GPT technology to simulate human conversation.</h5>
-    </div>
-    <div class="d-flex">
-      <div class="card m-2 bg-danger text-primary">
-        <div class="card-body">
-          <h5>$10/month Basic</h5>
-        </div>
-      </div>
-      <div class="card m-2 bg-danger-subtle text-success">
-        <div class="card-body">
-          <h5>$10/month Basic</h5>
-        </div>
-      </div>
-      <div class="card m-2 bg-warning-subtle text-danger">
-        <div class="card-body">
-          <h5>$10/month Basic</h5>
-        </div>
-      </div>
-    </div>
-    <div class="d-flex">
-      <div class="ul ms-3">
-        <h5>Features</h5>
-        <ul>
-          <li>Customizable responses</li>
-          <li>Customizable responses</li>
-          <li>Customizable responses</li>
-        </ul>
-      </div>
-      <div class="ul ms-3">
-        <h5>Integrations</h5>
-        <ul>
-          <li>Customizable responses</li>
-          <li>Customizable responses</li>
-          <li>Customizable responses</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="card ms-5" style="width: 30rem">
-    <img src="./img/chatgpt_assistente 1-2.png" class="card-img-top" alt="..." />
-    <div class="card-body">
-      <h2>Hi, how are you doing today?</h2>
-      <p class="card-text text-center">hatGPT is an AI-powered chatbot platform that uses OpenAI's GPT technology to simulate human conversation.hatGPT is an AI-powered chatbot platform that uses OpenAI's GPT technology to simulate human conversation.hatGPT is an AI-powered chatbot platform that uses OpenAI's GPT technology to simulate human conversation.</p>
-    </div>
-  </div>
-    `);
-  //   getModalContainer.appendChild(crtDivForModal);
+let displayWithId = (data) => {
+  console.log(data);
+  let getModalContainer = document.getElementById("modalBody");
+  getModalContainer.innerHTML = `
+          <div class="card ms-5" style="width: 35rem">
+            <div class="card-body">
+              <h5 class="card-title">${data.data.tool_name}</h5>
+            </div>
+            <div class="d-flex">
+              <div class="card m-2 bg-danger text-primary">
+                <div class="card-body">
+                  <h5>${
+                    data.data.pricing[0].plan
+                      ? data.data.pricing[0].plan
+                      : "not Available"
+                  }</h5>
+                  <h5>${
+                    data.data.pricing[0].price
+                      ? data.data.pricing[0].price
+                      : "not Available"
+                  }</h5>
+                </div>
+              </div>
+              <div class="card m-2 bg-danger-subtle text-success">
+                <div class="card-body">
+                <h5>${data.data.pricing[1].plan}</h5>
+                <h5>${data.data.pricing[1].price}</h5>
+                </div>
+              </div>
+              <div class="card m-2 bg-warning-subtle text-danger">
+                <div class="card-body">
+                <h5>${data.data.pricing[2].plan}</h5>
+                <h5>${data.data.pricing[2].price}</h5>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <div class="ul ms-3">
+                <h5>Features</h5>
+                <ul>
+                  <li> ${data.data.features["1"].feature_name}</li>
+                  <li> ${data.data.features["2"].feature_name}</li>
+                  <li> ${data.data.features["3"].feature_name}</li>
+                </ul>
+              </div>
+              <div class="ul ms-3">
+                <h5>Integrations</h5>
+                <ul>
+                  <li> ${data.data.integrations[0]}</li>
+                  <li>  ${data.data.integrations[1]}</li>
+                  <li> ${data.data.integrations[2]}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card ms-5" style="width: 30rem">
+            <img src="${data.data.image_link}" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h2 class="text-sm">${
+                data.data.input_output_examples[0].output
+              }</h2>
+              <p class="card-text text-center">${
+                data.data.input_output_examples[0].input
+              }</p>
+            </div>
+          </div>
+            `;
 };
 
-loadAPIid();
+// let loadAPIid = () => {
+//   let allIdUrl = `https://openapi.programming-hero.com/api/ai/tools`;
+//   fetch(allIdUrl)
+//     .then((res) => res.json())
+//     .then((id) => getProductWithId(id.data.tools));
+// };
+
+// let getProductWithId = (id) => {
+//   id.forEach((element) => {
+//     // let getAllIdUrl = ;
+//     fetch(`https://openapi.programming-hero.com/api/ai/tool/${element.id}`)
+//       .then((res) => res.json())
+//       .then((data) => getInformationOnModal(data));
+//   });
+
+//   let getInformationOnModal = (data) => {
+//     // console.log(data);
+//     // console.log(data.data.tool_name);
+//     // console.log(data.data.accuracy.description);
+//     let getModalContainer = document.getElementById("modalBody");
+//     // let convertOjbInToArray = Object.entries(data);
+//     // console.log(convertOjbInToArray);
+//     // convertOjbInToArray.forEach((data) => {
+//     // console.log(elm);
+//     getModalContainer.innerHTML = `
+//         <div class="card ms-5" style="width: 35rem">
+//           <div class="card-body">
+//             <h5 class="card-title">{elm.tool_name}</h5>
+//           </div>
+//           <div class="d-flex">
+//             <div class="card m-2 bg-danger text-primary">
+//               <div class="card-body">
+//                 <h5>$10/month Basic</h5>
+//               </div>
+//             </div>
+//             <div class="card m-2 bg-danger-subtle text-success">
+//               <div class="card-body">
+//                 <h5>$10/month Basic</h5>
+//               </div>
+//             </div>
+//             <div class="card m-2 bg-warning-subtle text-danger">
+//               <div class="card-body">
+//                 <h5>$10/month Basic</h5>
+//               </div>
+//             </div>
+//           </div>
+//           <div class="d-flex">
+//             <div class="ul ms-3">
+//               <h5>Features</h5>
+//               <ul>
+//                 <li> </li>
+//                 <li> </li>
+//                 <li> }</li>
+//               </ul>
+//             </div>
+//             <div class="ul ms-3">
+//               <h5>Integrations</h5>
+//               <ul>
+//                 <li></li>
+//                 <li></li>
+//                 <li></li>
+//               </ul>
+//             </div>
+//           </div>
+//         </div>
+//         <div class="card ms-5" style="width: 30rem">
+//           <img src=" " class="card-img-top" alt="..." />
+//           <div class="card-body">
+//             <h2> </h2>
+//             <p class="card-text text-center">$ </p>
+//           </div>
+//         </div>
+//           `;
+//     //   getModalContainer.appendChild(crtDivForModal);
+//     // });
+//   };
+// };
+// loadAPIid();
