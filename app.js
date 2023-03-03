@@ -2,12 +2,15 @@ let loadAPI = () => {
   let allDataUrl = `https://openapi.programming-hero.com/api/ai/tools`;
   fetch(allDataUrl)
     .then((res) => res.json())
-    .then((data) => displayProduct(data.data));
+    .then((data) => displayProduct(data.data.tools));
 };
 
 let displayProduct = (data) => {
   // let arr = [data];
-  data.tools.forEach((element) => {
+  data = data.slice(0, 6);
+  let showMoreButton = document.getElementById("showMoreButton");
+  // showMoreButton.removeClassList("d-none");
+  data.forEach((element) => {
     console.log(element.id);
     let getProductContainer = document.getElementById("productContainer");
     // data = arr.slice(0, 5);
@@ -54,7 +57,55 @@ let displayProduct = (data) => {
     loadWithId(element.id);
   });
 };
-loadAPI();
+
+let displayAllData = (data) => {
+  data.forEach((element) => {
+    console.log(element.id);
+    let getProductContainer = document.getElementById("productContainer");
+    // data = arr.slice(0, 5);
+    let crtDiv = document.createElement("div");
+    crtDiv.innerHTML = `
+    <div class="card m-5">
+    <img
+      src="${element.image}"
+      class="card-img-top"
+      alt="..."
+    />
+    <div class="card-body">
+      <h4 class="card-title">Features</h4>
+      <ol class="">
+        <li class=" ">${element.features[0]}</li>
+        <li class="">${element.features[2]}</li>
+        <li class="">${element.features[3]}</li>
+      </ol>
+      <div class="cardFooter">
+      <h4 class="card-title">${element.name}</h4>
+        <div class="date d-flex align-items-center justify-content-between">
+          <div class="img d-flex">
+            <img
+              src="./img/dateIMg.png"
+              class="me-2"
+              alt=""
+              width="25px"
+              height="25px"
+            />
+            <p>${element.published_in}</p>
+          </div>
+          <i
+            class="fa-solid fa-arrow-right"
+            data-bs-target="#exampleModalToggle"
+            data-bs-toggle="modal"
+          ></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+    getProductContainer.appendChild(crtDiv);
+    loadWithId(element.id);
+  });
+};
 
 let loadWithId = (id) => {
   fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
@@ -130,6 +181,23 @@ let displayWithId = (data) => {
           </div>
             `;
 };
+
+loadAPI();
+
+// show all data
+let loadAllData = () => {
+  let allDataUrl = `https://openapi.programming-hero.com/api/ai/tools`;
+  fetch(allDataUrl)
+    .then((res) => res.json())
+    .then((data) => displayAllData(data.data.tools));
+};
+
+// show more button
+document.getElementById("seeMoreBtn").addEventListener("click", function () {
+  loadAllData();
+  let showMoreButton = document.getElementById("showMoreButton");
+  showMoreButton.addClassLIst("d-none");
+});
 
 // let loadAPIid = () => {
 //   let allIdUrl = `https://openapi.programming-hero.com/api/ai/tools`;
