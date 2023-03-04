@@ -1,3 +1,4 @@
+// load api and all data first time
 let loadAPI = () => {
   let allDataUrl = `https://openapi.programming-hero.com/api/ai/tools`;
   fetch(allDataUrl)
@@ -6,152 +7,111 @@ let loadAPI = () => {
   toggleSpinier(true);
 };
 let displayProduct = (data) => {
-  // let arr = [data];
   data = data.slice(0, 6);
-  let showMoreButton = document.getElementById("showMoreButton");
-  // showMoreButton.removeClassList("d-none");
-  data.forEach((element) => {
-    // console.log(element.id);
-    let getProductContainer = document.getElementById("productContainer");
-    // data = arr.slice(0, 5);
-    let crtDiv = document.createElement("div");
-    crtDiv.innerHTML = `
-    <div class="card col-12  m-5 col-sm-6 col-md-4">
-    <img src="${element.image}" class="card-img-top" alt="..." />
-    <div class="card-body">
-      <h4 class="card-title">Features</h4>
-      <ol class="">
-        <li class=" ">${element.features[0]}</li>
-        <li class="">${element.features[2]}</li>
-        <li class="">${element.features[3]}</li>
-      </ol>
-      <div class="cardFooter">
-        <h4 class="card-title">${element.name}</h4>
-        <div class="date d-flex align-items-center justify-content-between">
-          <div class="img d-flex">
-            <img
-              src="./img/dateIMg.png"
-              class="me-2"
-              alt=""
-              width="25px"
-              height="25px"
-            />
-            <p>${element.published_in}</p>
-          </div>
-          <i
-            class="fa-solid fa-arrow-right"
-            data-bs-target="#exampleModalToggle"
-            data-bs-toggle="modal"
-          ></i>
-        </div>
-      </div>
-    </div>
-  </div>
-`;
-    getProductContainer.appendChild(crtDiv);
-    loadWithId(element.id);
-  });
+  func(data);
   toggleSpinier(false);
 };
-
-let displayAllData = (data) => {
-  data = data.slice(6, 12);
+let func = (data) => {
   data.forEach((element) => {
-    // console.log(element.id);
     let getProductContainer = document.getElementById("productContainer");
-    // data = arr.slice(0, 5);
     let crtDiv = document.createElement("div");
     crtDiv.innerHTML = `
-    <div class="card m-5">
-    <img
-      src="${element.image}"
-      class="card-img-top"
-      alt="..."
-    />
-    <div class="card-body">
-      <h4 class="card-title">Features</h4>
-      <ol class="">
-        <li class=" ">${element.features[0]}</li>
-        <li class="">${element.features[2]}</li>
-        <li class="">${element.features[3]}</li>
-      </ol>
-      <div class="cardFooter">
+  <div class="card col-12  m-5 col-sm-6 col-md-4">
+  <img src="${element.image}" class="card-img-top" alt="..." />
+  <div class="card-body">
+    <h4 class="card-title">Features</h4>
+    <ol class="" id="ol">
+    <li class=" ">${
+      element.features[0] ? element.features[0] : "no data found"
+    }</li>
+    <li class="">${
+      element.features[2] ? element.features[2] : "no data found"
+    }</li>
+    <li class="">${
+      element.features[3] ? element.features[3] : "no data found"
+    }</li>
+    </ol>
+    <div class="cardFooter">
       <h4 class="card-title">${element.name}</h4>
-        <div class="date d-flex align-items-center justify-content-between">
-          <div class="img d-flex">
-            <img
-              src="./img/dateIMg.png"
-              class="me-2"
-              alt=""
-              width="25px"
-              height="25px"
-            />
-            <p>${element.published_in}</p>
-          </div>
-        <div >
-          <i
-          class="fa-solid fa-arrow-right bd-danger"
+      <div class="date d-flex align-items-center justify-content-between">
+        <div class="img d-flex">
+          <img
+            src="./img/dateIMg.png"
+            class="me-2"
+            alt=""
+            width="25px"
+            height="25px"
+          />
+          <p>${element.published_in}</p>
+        </div>
+        <i id="modalBtn"
+        onclick="loadWithId('${element.id}')"
+          class="fa-solid fa-arrow-right"
           data-bs-target="#exampleModalToggle"
           data-bs-toggle="modal"
         ></i>
-        </div>
-        </div>
       </div>
     </div>
   </div>
-</div>
+  </div>
 `;
     getProductContainer.appendChild(crtDiv);
     loadWithId(element.id);
   });
 };
+// show all data to click see more button
+let loadAllData = () => {
+  fetch(`https://openapi.programming-hero.com/api/ai/tools`)
+    .then((res) => res.json())
+    .then((data) => displayAllData(data.data.tools));
+};
+let displayAllData = (data) => {
+  data = data.slice(6, 12);
+  func(data);
+};
+// document.getElementById("modalBtn").addEventListener("click", function () {
+//   console.log("get modal id");
+// });
 
-// show dataa on modal
-
+// show data on modal
 let loadAllDataForID = () => {
   fetch(`https://openapi.programming-hero.com/api/ai/tools`)
     .then((res) => res.json())
     .then((id) => loadWithId(id));
 };
-
 let loadWithId = (id) => {
   fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
     .then((res) => res.json())
-    .then((data) => displayWithId(data));
+    .then((data) => displayWithId(data.data));
 };
 
 // modal
 let displayWithId = (data) => {
-  // const dataArray = Object.entries(data.data).map(([key, value]) => {
-  //   return { [key]: value };
-  // });
-  // data.forEach((element) => {
-  //   console.log(element);
-  // getModalContainer.innerHTML = "";
+  const { pricing } = data;
   let getModalContainer = document.getElementById("modalBody");
-  let crtDiv2 = document.createElement("div");
   getModalContainer.innerHTML = `
     <div class="card ms-5" style="width: 35rem">
       <div class="card-body">
-        <h5 class="card-title">${data.data.tool_name}</h5>
+      <h4 class="card-title">${data.tool_name}</h4>
+      <h6>${data.description}</h6>;
       </div>
       <div class="d-flex">
         <div class="card m-2 bg-danger text-primary">
           <div class="card-body">
-            <h5>${data.data.pricing[0].plan}</h5>
-            <h5>${data.data.pricing[0].price}</h5>
+            <h5>${data.pricing[0].plan}</h5>
+            <h5>${pricing ? data.pricing[0].price : "free of /cost"}</h5>
           </div>
         </div>
         <div class="card m-2 bg-danger-subtle text-success">
           <div class="card-body">
-            <h5>${data.data.pricing[1].plan}</h5>
-            <h5>${data.data.pricing[1].price}</h5>
+            <h5>${data.pricing[1].plan}</h5>
+            <h5>${pricing ? data.pricing[1].price : "free of / cost"}</h5>
           </div>
         </div>
         <div class="card m-2 bg-warning-subtle text-danger">
           <div class="card-body">
-            <h5>${data.data.pricing[2].plan}</h5>
-            <h5>${data.data.pricing[2].price}</h5>
+            <h5>${data.pricing[2].plan}</h5>
+            <h5>${pricing ? data.pricing[2].price : "free of / cost"}</h5>
           </div>
         </div>
       </div>
@@ -159,43 +119,59 @@ let displayWithId = (data) => {
         <div class="ul ms-3">
           <h5>Features</h5>
           <ul>
-            <li>${data.data.features[1].feature_name}</li>
-            <li> ${data.data.features[2].feature_name}</li>
-            <li> ${data.data.features[3].feature_name}</li>
+            <li>${
+              data.features[1].feature_name
+                ? data.features[1].feature_name
+                : "no data font "
+            }</li>
+            <li>${
+              data.features[2].feature_name
+                ? data.features[2].feature_name
+                : "no data found"
+            }</li>
+            <li>${
+              data.features[3].feature_name
+                ? data.features[3].feature_name
+                : "no data found"
+            }</li>
           </ul>
         </div>
         <div class="ul ms-3">
           <h5>Integrations</h5>
           <ul>
-            <li>${data.data.integrations[1]}</li>
-            <li>${data.data.integrations[2]}</li>
-            <li>${data.data.integrations[3]}</li>
+            <li>${
+              data.integrations[1] ? data.integrations[1] : "no data found"
+            }</li>
+            <li>${
+              data.integrations[2] ? data.integrations[2] : "no data found"
+            }</li>
+            <li>${
+              data.integrations[3] ? data.integrations[3] : "no data found"
+            }</li>
           </ul>
         </div>
       </div>
     </div>
     <div class="card ms-5" style="width: 30rem">
      <div class="d-flex ms-5"> 
-      <img src="${data.data.image_link}" class="card-img-top" alt="..." />
-      <h4><span class="badge bg-danger">${data.data.accuracy.score}</span></h4>
+      <img src="${
+        data.image_link ? data.image_link : "There is no image found"
+      }" class="card-img-top" alt="..." />
+      <h4><span class="badge bg-danger">${
+        data.accuracy.score ? data.accuracy.score : "no data found"
+      }%</span></h4>
      </div>
       <div class="card-body">
-        <h2>${data.data.tool_name}</h2>
-        <p class="card-text text-center">${data.data.description}</p>
+      <h1>${data.input_output_examples[0].input}</h1>
+      <p>${data.input_output_examples[0].output}</p>
       </div>
     </div>
       `;
-  getModalContainer.appendChild(crtDiv2);
+  // getModalContainer.appendChild(crtDiv2);
   // });
 };
+loadAllDataForID();
 
-// show all data
-let loadAllData = () => {
-  let allDataUrl = `https://openapi.programming-hero.com/api/ai/tools`;
-  fetch(allDataUrl)
-    .then((res) => res.json())
-    .then((data) => displayAllData(data.data.tools));
-};
 // show more button
 document.getElementById("seeMoreBtn").addEventListener("click", function () {
   loadAllData();
@@ -216,77 +192,3 @@ loadAPI();
 
 // filter by date
 document.getElementById("filterBtn").addEventListener("click", function () {});
-
-// let loadAPIid = () => {
-//   fetch(`https://openapi.programming-hero.com/api/ai/tools`)
-//     .then((res) => res.json())
-//     .then((id) => getProductWithId(id.data.tools));
-// };
-
-// let getProductWithId = (id) => {
-//   id.forEach((element) => {
-//     fetch(`https://openapi.programming-hero.com/api/ai/tool/${element.id}`)
-//       .then((res) => res.json())
-//       .then((data) => getInformationOnModal(data.data));
-//   });
-
-//   let getInformationOnModal = (data) => {
-//     // console.log(data.tools);
-//     // let convert = Object.values(data);
-//     // console.log(convert["1"]);
-//     let getModalContainer = document.getElementById("modalBody");
-//     data.data.forEach((data) => {
-//       // console.log(element);
-// getModalContainer.innerHTML = `
-//     <div class="card ms-5" style="width: 35rem">
-//       <div class="card-body">
-//         <h5 class="card-title">${data[1]}</h5>
-//       </div>
-//       <div class="d-flex">
-//         <div class="card m-2 bg-danger text-primary">
-//           <div class="card-body">
-//             <h5>$10/month Basic</h5>
-//           </div>
-//         </div>
-//         <div class="card m-2 bg-danger-subtle text-success">
-//           <div class="card-body">
-//             <h5>$10/month Basic</h5>
-//           </div>
-//         </div>
-//         <div class="card m-2 bg-warning-subtle text-danger">
-//           <div class="card-body">
-//             <h5>$10/month Basic</h5>
-//           </div>
-//         </div>
-//       </div>
-//       <div class="d-flex">
-//         <div class="ul ms-3">
-//           <h5>Features</h5>
-//           <ul>
-//             <li> </li>
-//             <li> </li>
-//             <li> }</li>
-//           </ul>
-//         </div>
-//         <div class="ul ms-3">
-//           <h5>Integrations</h5>
-//           <ul>
-//             <li></li>
-//             <li></li>
-//             <li></li>
-//           </ul>
-//         </div>
-//       </div>
-//     </div>
-//     <div class="card ms-5" style="width: 30rem">
-//       <img src=" " class="card-img-top" alt="..." />
-//       <div class="card-body">
-//         <h2> </h2>
-//         <p class="card-text text-center">$ </p>
-//       </div>
-//     </div>
-//       `;
-//     });
-//   };
-// };
-// loadAPIid();
